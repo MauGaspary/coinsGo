@@ -1,18 +1,17 @@
 package api
 
 import (
-	"net/http"
 	"encoding/json"
-	
+	"net/http"
 )
 
 type AccountBalanceParams struct {
-	AccountID string `json:"account_id"`
+	AccountID string `schema:"account_id"`
 }
 
 type AccountBalanceResponse struct {
-	Code	int     `json:"code"`
-	Balance	float64 `json:"balance"`
+	Code    int     `json:"code"`
+	Balance float64 `json:"balance"`
 }
 
 type Error struct {
@@ -33,10 +32,10 @@ func writeErrorResponse(w http.ResponseWriter, code int, message string) {
 }
 
 var (
-	RequestErrorHandler = func(w http.ResponseWriter, err error){
+	RequestErrorHandler = func(w http.ResponseWriter, err error) {
 		writeErrorResponse(w, http.StatusBadRequest, err.Error())
 	}
-	InternalErrorHandler = func(w http.ResponseWriter){
+	InternalErrorHandler = func(w http.ResponseWriter) {
 		writeErrorResponse(w, http.StatusInternalServerError, "Unexpected Error")
 	}
 )

@@ -42,7 +42,7 @@ func GetAccountBalance(w http.ResponseWriter, r *http.Request) {
 		Balance: (*tokenDetails).Balance,
 		Code: http.StatusOK,
 	}
-	
+
 
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(response)
