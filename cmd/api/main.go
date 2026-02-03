@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
-	"github.com/MauGaspary/goapi/api/internal/handlers"
+	"github.com/MauGaspary/goapi/internal/handlers"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -14,13 +14,13 @@ func main() {
 	var r *chi.Mux = chi.NewRouter()
 	handlers.Handler(r)
 	fmt.Println("Starting API server...")
-	fmt.Println("
+	fmt.Println(`
 	 ██████   ██████       █████  ██████  ██ 
 	██       ██    ██     ██   ██ ██   ██ ██ 
 	██   ███ ██    ██     ███████ ██████  ██ 
 	██    ██ ██    ██     ██   ██ ██      ██ 
 	 ██████   ██████      ██   ██ ██      ██                                      
-	")
+	`)
 
 	err := http.ListenAndServe("localhost:8080", r)
 	if err != nil {

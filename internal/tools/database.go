@@ -15,11 +15,12 @@ type AccountDetails struct {
 
 type DatabaseInterface interface {
 	GetUserLoginDetails(accountID string) *LoginDetails
-	GetUserAccountDetails(accountID string) *AccountDetails
+	GetUserAccount(accountID string) *AccountDetails
 	SetupDatabase() error
 }
 
 func NewDatabase() (*DatabaseInterface, error) {
+	
 	var database DatabaseInterface = &MockDatabase{}
 
 	var err error = database.SetupDatabase()

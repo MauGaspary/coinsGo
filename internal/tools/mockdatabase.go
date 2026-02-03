@@ -48,7 +48,7 @@ func (db *MockDatabase) GetUserLoginDetails(accountID string) *LoginDetails {
 	return &clientData
 }
 
-func (db *MockDatabase) GetUserAccountDetails(accountID string) *AccountDetails {
+func (db *MockDatabase) GetUserAccount(accountID string) *AccountDetails {
 	time.Sleep(100 * time.Millisecond)
 
 	var accountData = AccountDetails{}
