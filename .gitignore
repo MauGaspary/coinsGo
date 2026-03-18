@@ -1,0 +1,6 @@
+# Binários do Go
+*.exe
+*.exe~
+
+# Pasta de ferramentas do Scoop/VS Code (se houver)
+.vscode/
