@@ -13,11 +13,11 @@ var mockLoginDetails = map[string]LoginDetails{
 	},
 	"mariaclara": {
 		AuthToken: "456",
-		AccountID: "mariaclara",
+		AccountID: "anaclara",
 	},
-	"laura": {
+	"mauricio": {
 		AuthToken: "789",
-		AccountID: "laura",
+		AccountID: "mauricio",
 	},
 }
 
@@ -30,9 +30,9 @@ var mockBalanceDetails = map[string]AccountDetails{
 		Balance:   250.75,
 		AccountID: "mariaclara",
 	},
-	"laura": {
+	"mauricio": {
 		Balance:   300.00,
-		AccountID: "laura",
+		AccountID: "mauricio",
 	},
 }
 

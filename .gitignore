@@ -4,3 +4,5 @@
 
 # Pasta de ferramentas do Scoop/VS Code (se houver)
 .vscode/
+
+.env
