@@ -4,13 +4,15 @@ import (
 	"github.com/MauGaspary/goapi/internal/middleware"
 	"github.com/go-chi/chi"
 	chimiddleware "github.com/go-chi/chi/middleware"
+	"github.com/MauGaspary/goapi/internal/tools"
 )
 
-func Handler(r *chi.Mux) {
+func Handler(r *chi.Mux, db tools.DatabaseInterface) {
 	r.Use(chimiddleware.StripSlashes)
 
 	r.Route("/account", func(router chi.Router) {
-		router.Use(middleware.AuthorizationMiddleware)
-		router.Get("/balance", GetAccountBalance)
+		AccountHandlers := &AccountHandlers{DB: db}
+		router.Use(middleware.AuthorizationMiddleware(db))
+		router.Get("/balance", AccountHandlers.GetAccountBalance)
 	})
 }

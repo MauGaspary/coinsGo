@@ -10,7 +10,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func GetAccountBalance(w http.ResponseWriter, r *http.Request) {
+type AccountHandlers struct {
+	DB tools.DatabaseInterface
+}
+
+func (h *AccountHandlers) GetAccountBalance(w http.ResponseWriter, r *http.Request) {
 	var params = api.AccountBalanceParams{}
 	var decoder *schema.Decoder= schema.NewDecoder()
 	var err error
@@ -23,15 +27,8 @@ func GetAccountBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var database *tools.DatabaseInterface
-	database, err = tools.NewDatabase()
-	if err != nil {
-		api.InternalErrorHandler(w)
-		return
-	}
-
 	var tokenDetails *tools.AccountDetails
-	tokenDetails = (*database).GetUserAccount(params.AccountID)
+	tokenDetails = h.DB.GetUserAccount(params.AccountID)
 	if tokenDetails == nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)

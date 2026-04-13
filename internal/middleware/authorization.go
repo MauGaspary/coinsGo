@@ -11,35 +11,29 @@ import (
 
 var UnAuthorizedError = errors.New("Invalid username or token")
 
-func AuthorizationMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var AccountID string = r.URL.Query().Get("account_id")
-		var token = r.Header.Get("Authorization")
-		var err error
+func AuthorizationMiddleware(db tools.DatabaseInterface) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			var AccountID string = r.URL.Query().Get("account_id")
+			var token = r.Header.Get("Authorization")
 
-		if AccountID == "" || token == "" {
-			log.Error(UnAuthorizedError)
-			api.RequestErrorHandler(w, UnAuthorizedError)
-			return
-		}
+			if AccountID == "" || token == "" {
+				log.Error(UnAuthorizedError)
+				api.RequestErrorHandler(w, UnAuthorizedError)
+				return
+			}
 
-		var database *tools.DatabaseInterface
-		database, err = tools.NewDatabase()
-		if err != nil {
-			api.InternalErrorHandler(w)
-			return
-		}
+			var loginDetails *tools.LoginDetails
+			loginDetails = db.GetUserLoginDetails(AccountID)
 
-		var loginDetails *tools.LoginDetails
-		loginDetails = (*database).GetUserLoginDetails(AccountID)
+			if loginDetails == nil || (token != (*loginDetails).AuthToken) {
+				log.Error(UnAuthorizedError)
+				api.RequestErrorHandler(w, UnAuthorizedError)
+				return
+			}
 
-		if loginDetails == nil || (token != (*loginDetails).AuthToken) {
-			log.Error(UnAuthorizedError)
-			api.RequestErrorHandler(w, UnAuthorizedError)
-			return
-		}
+			next.ServeHTTP(w, r)
 
-		next.ServeHTTP(w, r)
-
-	})
+		})
+	}
 }

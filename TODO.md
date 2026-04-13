@@ -4,15 +4,15 @@ Este documento detalha os próximos passos para a evolução da API, ordenados p
 
 ## 1. Configurações e Variáveis de Ambiente (Fundação)
 **Por que fazer primeiro:** Antes de conectar banco de dados ou criar tokens JWT, precisamos de um lugar seguro para guardar strings de conexão e chaves secretas, tirando o que está "hardcoded" no código.
-- [ ] Instalar pacote para ler arquivos `.env` (Ex: `github.com/joho/godotenv` ou `spf13/viper`).
-- [ ] Criar arquivo `.env` (adicionado ao `.gitignore`) e um `.env.example`.
-- [ ] Mudar a porta do servidor `:8080` no `main.go` para ler de uma variável de ambiente `PORT`.
+- [x] Instalar pacote para ler arquivos `.env` (Ex: `github.com/joho/godotenv` ou `spf13/viper`).
+- [x] Criar arquivo `.env` (adicionado ao `.gitignore`) e um `.env.example`.
+- [x] Mudar a porta do servidor `:8080` no `main.go` para ler de uma variável de ambiente `PORT`.
 
 ## 2. Refatoração de Arquitetura - Injeção de Dependências
 **Por que fazer agora:** Atualmente, a API chama `tools.NewDatabase()` a cada requisição HTTP. Se colocarmos um banco de dados real agora, isso vai abrir múltiplas conexões simultâneas até travar o banco.
-- [ ] Inicializar o banco de dados **apenas uma vez** no `main.go`.
-- [ ] Refatorar os Handlers (como `GetAccountBalance`) para receberem a instância do banco (usando uma *Struct* para o handler).
-- [ ] Refatorar o `AuthorizationMiddleware` para também receber a instância do banco de dados injetada.
+- [x] Inicializar o banco de dados **apenas uma vez** no `main.go`.
+- [x] Refatorar os Handlers (como `GetAccountBalance`) para receberem a instância do banco (usando uma *Struct* para o handler).
+- [x] Refatorar o `AuthorizationMiddleware` para também receber a instância do banco de dados injetada.
 
 ## 3. Banco de Dados Real (PostgreSQL)
 **Por que fazer agora:** Com as configurações seguras e a arquitetura arrumada, podemos substituir o `MockDatabase` por um banco de dados de verdade sem riscos estruturais.

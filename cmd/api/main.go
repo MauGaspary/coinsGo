@@ -5,10 +5,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-chi/chi"
 	"github.com/MauGaspary/goapi/internal/handlers"
-	log "github.com/sirupsen/logrus"
+	"github.com/MauGaspary/goapi/internal/tools"
+	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -17,9 +18,19 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+
+	var err error
+
+	var database *tools.DatabaseInterface
+	database, err = tools.NewDatabase()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 	log.SetReportCaller(true)
 	var r *chi.Mux = chi.NewRouter()
-	handlers.Handler(r)
+	handlers.Handler(r, *database)
 	
 	// Servir index.html na raiz
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +57,7 @@ func main() {
 
 	fmt.Println("Server is now running.")
 
-	err := http.ListenAndServe(":" + port, r)
+	err = http.ListenAndServe(":" + port, r)
 	if err != nil {
 		log.Error(err)
 	}
