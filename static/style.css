@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #0d1800;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -41,10 +41,10 @@ body {
 
 /* Login Screen */
 .card {
-    background: white;
+    background: #d0dbdc;
     border-radius: 12px;
     padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 40px rgba(13, 24, 0, 0.3);
 }
 
 .logo {
@@ -54,17 +54,17 @@ body {
 
 .logo h1 {
     font-size: 48px;
-    color: #667eea;
+    color: #781717;
 }
 
 .card h2 {
     font-size: 28px;
-    color: #333;
+    color: #2a2a2a;
     margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #666;
+    color: #4a4a4a;
     margin-bottom: 30px;
     font-size: 14px;
 }
@@ -76,22 +76,23 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #333;
+    color: #2a2a2a;
     font-weight: 500;
 }
 
 .form-group input {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #a0a0a0;
     border-radius: 8px;
     font-size: 14px;
     transition: border-color 0.3s;
+    background: #f8f8f8;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #781717;
 }
 
 .form-group small {
@@ -114,14 +115,14 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #781717 0%, #5a1313 100%);
     color: white;
     margin-top: 10px;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 5px 20px rgba(120, 23, 23, 0.4);
 }
 
 .btn-primary:active {
@@ -129,19 +130,19 @@ body {
 }
 
 .btn-secondary {
-    background: #f0f0f0;
-    color: #333;
+    background: #b0b0b0;
+    color: #2a2a2a;
     margin: 10px 10px 10px 0;
     display: inline-block;
     width: auto;
 }
 
 .btn-secondary:hover {
-    background: #e0e0e0;
+    background: #909090;
 }
 
 .btn-logout {
-    background: #ff6b6b;
+    background: #781717;
     color: white;
     width: auto;
     padding: 8px 16px;
@@ -149,12 +150,12 @@ body {
 }
 
 .btn-logout:hover {
-    background: #ff5252;
+    background: #5a1313;
 }
 
 /* Error */
 .error {
-    color: #ff6b6b;
+    color: #781717;
     margin-top: 15px;
     font-size: 14px;
     text-align: center;
@@ -162,11 +163,11 @@ body {
 
 /* Dashboard */
 .header {
-    background: white;
+    background: #d0dbdc;
     padding: 20px;
     border-radius: 12px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(13, 24, 0, 0.2);
 }
 
 .header-content {
@@ -176,7 +177,7 @@ body {
 }
 
 .header h1 {
-    color: #667eea;
+    color: #781717;
     font-size: 32px;
 }
 
@@ -187,7 +188,7 @@ body {
 }
 
 .welcome {
-    color: white;
+    color: #d0dbdc;
     margin-bottom: 10px;
 }
 
@@ -196,13 +197,13 @@ body {
 }
 
 .card h3 {
-    color: #333;
+    color: #2a2a2a;
     margin-bottom: 20px;
     font-size: 18px;
 }
 
 .balance-display {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #781717 0%, #5a1313 100%);
     color: white;
     padding: 40px;
     border-radius: 8px;

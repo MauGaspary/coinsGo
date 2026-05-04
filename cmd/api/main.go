@@ -55,7 +55,7 @@ func main() {
 	 ██████   ██████      ██   ██ ██      ██                                      
 	`)
 
-	fmt.Println("Server is now running.")
+	fmt.Println("Server is now running." + " Access the API at http://localhost:" + port)
 
 	err = http.ListenAndServe(":" + port, r)
 	if err != nil {
