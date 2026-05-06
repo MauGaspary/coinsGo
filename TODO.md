@@ -19,8 +19,8 @@ Este documento detalha os próximos passos para a evolução da API, ordenados p
 - [x] Escolher um driver/ferramenta (ex: `lib/pq` puro, GORM ou sqlc).
 - [x] Instalar e configurar o banco PostgreSQL (e go) com docker.
 - [x] Criar a conexão com o banco no código usando as variáveis do `.env` (ex: `DATABASE_URL`).
-- [ ] Implementar migrations (ex: `golang-migrate/migrate`) para criar as tabelas `users` e `accounts`.
-- [ ] Atualizar a interface `DatabaseInterface` para interagir com o PostgreSQL no lugar do Mock.
+- [x] Implementar migrations (ex: `golang-migrate/migrate`) para criar as tabelas `users` e `accounts`.
+- [x] Atualizar a interface `DatabaseInterface` para interagir com o PostgreSQL no lugar do Mock.
 
 ## 4. Autenticação e Segurança (JWT)
 **Por que fazer agora:** Agora que temos o banco real para validar usuários, podemos abandonar os tokens fixos.
