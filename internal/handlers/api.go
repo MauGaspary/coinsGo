@@ -4,10 +4,10 @@ import (
 	"github.com/MauGaspary/goapi/internal/middleware"
 	"github.com/go-chi/chi"
 	chimiddleware "github.com/go-chi/chi/middleware"
-	"github.com/MauGaspary/goapi/internal/tools"
+	"github.com/MauGaspary/goapi/internal/database"
 )
 
-func Handler(r *chi.Mux, db tools.DatabaseInterface) {
+func Handler(r *chi.Mux, db database.Querier) {
 	r.Use(chimiddleware.StripSlashes)
 
 	r.Route("/account", func(router chi.Router) {

@@ -5,13 +5,14 @@ import (
 	"net/http"
 
 	"github.com/MauGaspary/goapi/api"
-	"github.com/MauGaspary/goapi/internal/tools"
+	"github.com/MauGaspary/goapi/internal/database"
+	// "github.com/MauGaspary/goapi/internal/tools"
 	"github.com/gorilla/schema"
 	log "github.com/sirupsen/logrus"
 )
 
 type AccountHandlers struct {
-	DB tools.DatabaseInterface
+	DB database.Querier
 }
 
 func (h *AccountHandlers) GetAccountBalance(w http.ResponseWriter, r *http.Request) {
@@ -27,16 +28,16 @@ func (h *AccountHandlers) GetAccountBalance(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	var tokenDetails *tools.AccountDetails
-	tokenDetails = h.DB.GetUserAccount(params.AccountID)
-	if tokenDetails == nil {
-		log.Error(err)
+	// var tokenDetails *database.Account
+	accountDetails, err := h.DB.GetUserAccount(r.Context(), params.AccountID)
+	if err != nil {
+		log.Error("Erro ao buscar a conta no banco de dados:", err)
 		api.InternalErrorHandler(w)
 		return
 	}
 
 	var response = api.AccountBalanceResponse{
-		Balance: (*tokenDetails).Balance,
+		Balance: accountDetails.Balance,
 		Code: http.StatusOK,
 	}
 

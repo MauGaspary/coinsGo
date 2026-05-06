@@ -16,9 +16,9 @@ Este documento detalha os próximos passos para a evolução da API, ordenados p
 
 ## 3. Banco de Dados Real (PostgreSQL)
 **Por que fazer agora:** Com as configurações seguras e a arquitetura arrumada, podemos substituir o `MockDatabase` por um banco de dados de verdade sem riscos estruturais.
-- [ ] Escolher um driver/ferramenta (ex: `lib/pq` puro, GORM ou sqlc).
-- [ ] Instalar e configurar o banco PostgreSQL localmente.
-- [ ] Criar a conexão com o banco no código usando as variáveis do `.env` (ex: `DATABASE_URL`).
+- [x] Escolher um driver/ferramenta (ex: `lib/pq` puro, GORM ou sqlc).
+- [x] Instalar e configurar o banco PostgreSQL (e go) com docker.
+- [x] Criar a conexão com o banco no código usando as variáveis do `.env` (ex: `DATABASE_URL`).
 - [ ] Implementar migrations (ex: `golang-migrate/migrate`) para criar as tabelas `users` e `accounts`.
 - [ ] Atualizar a interface `DatabaseInterface` para interagir com o PostgreSQL no lugar do Mock.
 

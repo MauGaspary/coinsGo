@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"database/sql"
 
+	"github.com/MauGaspary/goapi/internal/database"
 	"github.com/MauGaspary/goapi/internal/handlers"
-	"github.com/MauGaspary/goapi/internal/tools"
+	// "github.com/MauGaspary/goapi/internal/tools"
 	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -19,18 +22,21 @@ func main() {
 		port = "8080"
 	}
 
-	var err error
-
-	var database *tools.DatabaseInterface
-	database, err = tools.NewDatabase()
-	if err != nil {
-		log.Fatal(err)
-		return
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		log.Fatal("Não foi possível encontrar a variável de ambiente DATABASE_URL")
 	}
+
+	dbConn, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		log.Fatal("Erro ao conectar ao banco de dados:", err)
+	}
+
+	dbQueries := database.New(dbConn)
 
 	log.SetReportCaller(true)
 	var r *chi.Mux = chi.NewRouter()
-	handlers.Handler(r, *database)
+	handlers.Handler(r, dbQueries)
 	
 	// Servir index.html na raiz
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
