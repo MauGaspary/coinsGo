@@ -24,8 +24,8 @@ Este documento detalha os próximos passos para a evolução da API, ordenados p
 
 ## 4. Autenticação e Segurança (JWT)
 **Por que fazer agora:** Agora que temos o banco real para validar usuários, podemos abandonar os tokens fixos.
-- [ ] Alterar o banco de dados para armazenar senhas como *hashes* (usando `golang.org/x/crypto/bcrypt`).
-- [ ] Criar o endpoint de Login (`POST /login`) que verifica credenciais e gera o JWT.
+- [x] Alterar o banco de dados para armazenar senhas como *hashes* (usando `golang.org/x/crypto/bcrypt`).
+- [x] Criar o endpoint de Login (`POST /login`) que verifica credenciais e gera o JWT.
 - [ ] Definir a chave secreta do JWT (`JWT_SECRET`) no arquivo `.env`.
 - [ ] Atualizar o `AuthorizationMiddleware` para extrair, validar a assinatura e ler o `account_id` de dentro do token JWT enviado no cabeçalho `Authorization: Bearer <token>`.
 

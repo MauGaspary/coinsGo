@@ -10,6 +10,6 @@ type Account struct {
 }
 
 type LoginDetail struct {
-	AccountID string `json:"account_id"`
-	AuthToken string `json:"auth_token"`
+	AccountID    string `json:"account_id"`
+	PasswordHash string `json:"password_hash"`
 }

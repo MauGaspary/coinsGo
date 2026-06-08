@@ -9,9 +9,13 @@ import (
 
 func Handler(r *chi.Mux, db database.Querier) {
 	r.Use(chimiddleware.StripSlashes)
+	AccountHandlers := &AccountHandlers{DB: db}
 
+	// Rota pública para criar conta (registro)
+	r.Post("/register", AccountHandlers.CreateAccount)
+
+	// Rotas protegidas por autenticação
 	r.Route("/account", func(router chi.Router) {
-		AccountHandlers := &AccountHandlers{DB: db}
 		router.Use(middleware.AuthorizationMiddleware(db))
 		router.Get("/balance", AccountHandlers.GetAccountBalance)
 	})

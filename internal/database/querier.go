@@ -9,6 +9,8 @@ import (
 )
 
 type Querier interface {
+	CreateAccount(ctx context.Context, accountID string) (Account, error)
+	CreateLoginDetail(ctx context.Context, arg CreateLoginDetailParams) (LoginDetail, error)
 	GetUserAccount(ctx context.Context, accountID string) (Account, error)
 	GetUserLoginDetails(ctx context.Context, accountID string) (LoginDetail, error)
 }

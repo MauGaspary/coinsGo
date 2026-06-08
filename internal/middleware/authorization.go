@@ -31,7 +31,7 @@ func AuthorizationMiddleware(db database.Querier) func(next http.Handler) http.H
 				return
 			}
 
-			if token != loginDetails.AuthToken {
+			if token != loginDetails.PasswordHash {
 				log.Error(UnAuthorizedError)
 				api.RequestErrorHandler(w, UnAuthorizedError)
 				return

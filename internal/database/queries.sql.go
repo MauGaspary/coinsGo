@@ -9,6 +9,37 @@ import (
 	"context"
 )
 
+const createAccount = `-- name: CreateAccount :one
+INSERT INTO accounts (account_id, balance) 
+VALUES ($1, 0.0)
+RETURNING account_id, balance
+`
+
+func (q *Queries) CreateAccount(ctx context.Context, accountID string) (Account, error) {
+	row := q.db.QueryRowContext(ctx, createAccount, accountID)
+	var i Account
+	err := row.Scan(&i.AccountID, &i.Balance)
+	return i, err
+}
+
+const createLoginDetail = `-- name: CreateLoginDetail :one
+INSERT INTO login_details (account_id, password_hash) 
+VALUES ($1, $2)
+RETURNING account_id, password_hash
+`
+
+type CreateLoginDetailParams struct {
+	AccountID    string `json:"account_id"`
+	PasswordHash string `json:"password_hash"`
+}
+
+func (q *Queries) CreateLoginDetail(ctx context.Context, arg CreateLoginDetailParams) (LoginDetail, error) {
+	row := q.db.QueryRowContext(ctx, createLoginDetail, arg.AccountID, arg.PasswordHash)
+	var i LoginDetail
+	err := row.Scan(&i.AccountID, &i.PasswordHash)
+	return i, err
+}
+
 const getUserAccount = `-- name: GetUserAccount :one
 SELECT account_id, balance FROM accounts
 WHERE account_id = $1 LIMIT 1
@@ -22,13 +53,13 @@ func (q *Queries) GetUserAccount(ctx context.Context, accountID string) (Account
 }
 
 const getUserLoginDetails = `-- name: GetUserLoginDetails :one
-SELECT account_id, auth_token FROM login_details
+SELECT account_id, password_hash FROM login_details
 WHERE account_id = $1 LIMIT 1
 `
 
 func (q *Queries) GetUserLoginDetails(ctx context.Context, accountID string) (LoginDetail, error) {
 	row := q.db.QueryRowContext(ctx, getUserLoginDetails, accountID)
 	var i LoginDetail
-	err := row.Scan(&i.AccountID, &i.AuthToken)
+	err := row.Scan(&i.AccountID, &i.PasswordHash)
 	return i, err
 }
