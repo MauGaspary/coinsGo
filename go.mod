@@ -1,6 +1,6 @@
 module github.com/MauGaspary/goapi
 
-go 1.23.2
+go 1.25.0
 
 require (
 	github.com/go-chi/chi v1.5.5
@@ -10,6 +10,8 @@ require (
 )
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/lib/pq v1.12.3 // indirect
-	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/crypto v0.53.0 // indirect
+	golang.org/x/sys v0.46.0 // indirect
 )
