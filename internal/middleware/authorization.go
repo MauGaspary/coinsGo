@@ -18,7 +18,7 @@ func AuthorizationMiddleware(db database.Querier) func(next http.Handler) http.H
 			var token = r.Header.Get("Authorization")
 
 			if AccountID == "" || token == "" {
-				log.Error(UnAuthorizedError)
+				log.Error("AccountID ou token ausente")
 				api.RequestErrorHandler(w, UnAuthorizedError)
 				return
 			}
@@ -32,7 +32,7 @@ func AuthorizationMiddleware(db database.Querier) func(next http.Handler) http.H
 			}
 
 			if token != loginDetails.PasswordHash {
-				log.Error(UnAuthorizedError)
+				log.Error("Token inválido")
 				api.RequestErrorHandler(w, UnAuthorizedError)
 				return
 			}

@@ -7,8 +7,8 @@ SELECT account_id, password_hash FROM login_details
 WHERE account_id = $1 LIMIT 1;
 
 -- name: CreateAccount :one
-INSERT INTO accounts (account_id, balance) 
-VALUES ($1, 0.0)
+INSERT INTO accounts (account_id) 
+VALUES ($1)
 RETURNING *;
 
 -- name: CreateLoginDetail :one

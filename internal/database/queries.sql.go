@@ -10,8 +10,8 @@ import (
 )
 
 const createAccount = `-- name: CreateAccount :one
-INSERT INTO accounts (account_id, balance) 
-VALUES ($1, 0.0)
+INSERT INTO accounts (account_id) 
+VALUES ($1)
 RETURNING account_id, balance
 `
 
