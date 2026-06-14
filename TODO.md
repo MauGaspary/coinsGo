@@ -27,7 +27,7 @@ Este documento detalha os próximos passos para a evolução da API, ordenados p
 - [x] Alterar o banco de dados para armazenar senhas como *hashes* (usando `golang.org/x/crypto/bcrypt`).
 - [x] Criar o endpoint de Login (`POST /login`) que verifica credenciais e gera o JWT.
 - [x] Definir a chave secreta do JWT (`JWT_SECRET`) no arquivo `.env`.
-- [x] Atualizar o `AuthorizationMiddleware` para extrair, validar a assinatura e ler o `account_id` de dentro do token JWT enviado no cabeçalho `Authorization: Bearer <token>`.
+- [] Atualizar o `AuthorizationMiddleware` para extrair, validar a assinatura e ler o `account_id` de dentro do token JWT enviado no cabeçalho `Authorization: Bearer <token>`.
 
 ## 5. Novas Features de Negócio (Transações Financeiras)
 **Por que fazer agora:** A base está sólida. É hora de brincar com as regras de negócio complexas.
