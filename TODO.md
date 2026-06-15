@@ -35,9 +35,24 @@ Este documento detalha os próximos passos para a evolução da API, ordenados p
 - [ ] Implementar endpoint de Saque (`POST /account/withdraw`).
 - [ ] Implementar endpoint de Transferência (`POST /account/transfer`).
 - [ ] Garantir atomicidade nas transferências usando transações no banco (`tx.Begin()`, `tx.Commit()`, `tx.Rollback()`) para evitar perda de dinheiro em caso de falha.
+- [ ] **Histórico de Transações (Extrato):** Criar tabela `transactions` para registrar todas as transferências/depósitos/saques e expor um endpoint `GET /account/statement`.
 
 ## 6. Infraestrutura e Qualidade (Testes, Docker e Swagger)
 **Por que fazer no fim (ou paralelamente):** Refinar o código para garantir que ele esteja pronto para produção.
 - [ ] **Testes:** Escrever testes unitários e de integração (usando `testing`, `httptest` e o pacote `testify` que já está no go.mod).
-- [ ] **Docker:** Criar um `Dockerfile` (multistage build) para a API e um `docker-compose.yml` para subir o PostgreSQL e a API com um único comando.
+- [x] **Docker:** Criar um `Dockerfile` (multistage build) para a API e um `docker-compose.yml` para subir o PostgreSQL e a API com um único comando.
 - [ ] **Documentação:** Configurar o Swagger (com `swaggo/swag`) para documentar e facilitar o teste dos endpoints gerados.
+
+## 7. Refatoração de Banco e Cadastro (Identificação por E-mail)
+**Por que fazer:** Tornar o sistema de cadastro e acesso mais robusto e próximo de um serviço real usando e-mail como chave única de login.
+- [ ] **Nova Modelagem DB:** Criar tabelas `users` (id, nome, email, cpf, password_hash) e relacionar com a tabela `accounts` (com numero_conta gerado automaticamente e saldo).
+- [ ] **Endpoint de Cadastro (`POST /register`):** Receber nome, email, CPF e senha, gerando automaticamente um número de conta exclusivo (ex: `10023-4`).
+- [ ] **Login por E-mail:** Atualizar `POST /login` para autenticar usando `email` + `password` em vez de `account_id`.
+- [ ] **Tela de Cadastro no Front-end:** Criar formulário de registro completo e elegante no tema escuro.
+
+## 8. Features de Banco Avançadas (Realismo)
+**Por que fazer:** Deixar o app com "cara de banco digital".
+- [ ] **Agência e Conta:** Separar as contas por agências simuladas (Ex: Agência 0001) para fins de transferência.
+- [ ] **Limite de Crédito/Cheque Especial:** Permitir que contas fiquem com saldo negativo até um limite aprovado no cadastro.
+- [ ] **Extrato Avançado:** Permitir filtrar o extrato por tipo (entrada/saída) e intervalo de datas.
+- [ ] **Área de Favoritos/Contatos:** Salvar contas para as quais o usuário transfere com frequência.

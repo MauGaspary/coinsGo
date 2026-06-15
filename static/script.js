@@ -12,30 +12,65 @@ async function handleLogin(e) {
     e.preventDefault();
     
     const username = document.getElementById('username').value;
-    const token = document.getElementById('token').value;
+    const password = document.getElementById('password').value;
     const errorEl = document.getElementById('loginError');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     
-    // Limpar erro anterior
+    // Limpar erro anterior e redefinir a cor
     errorEl.textContent = '';
+    errorEl.style.color = '#ff4c4c'; // cor de erro padrão
     
-    // Armazenar credenciais
-    auth.username = username;
-    auth.token = token;
-    
-    // Tentar carregar saldo para validar login
     try {
-        const hasAccess = await loadBalance();
-        if (hasAccess) {
-            showDashboard();
-        } else {
-            errorEl.textContent = 'Usuário ou token inválidos!';
-            auth.username = null;
-            auth.token = null;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Autenticando...';
+
+        // 1. Fazer o post para /login
+        const loginResponse = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ account_id: username, password: password })
+        });
+
+        if (!loginResponse.ok) {
+            throw new Error('Usuário ou senha inválidos!');
         }
+
+        const data = await loginResponse.json();
+        
+        if (!data.token) {
+            throw new Error('Token não foi retornado pelo servidor.');
+        }
+
+        // Armazenar credenciais
+        auth.username = username;
+        auth.token = data.token;
+
+        // 2. Mostrar mensagem de sucesso específica
+        errorEl.style.color = '#4CAF50'; // cor de sucesso (verde)
+        errorEl.textContent = 'Login efetuado com sucesso! Redirecionando...';
+
+        // 3. Aguardar um instante para o usuário ver a mensagem, e então buscar os dados
+        setTimeout(async () => {
+            const hasAccess = await loadBalance();
+            if (hasAccess) {
+                showDashboard();
+            } else {
+                errorEl.style.color = '#ff4c4c';
+                errorEl.textContent = 'Sessão expirada ou inválida. Faça login novamente!';
+                auth.username = null;
+                auth.token = null;
+            }
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Entrar';
+        }, 1200);
+
     } catch (error) {
-        errorEl.textContent = 'Erro ao conectar: ' + error.message;
+        errorEl.style.color = '#ff4c4c';
+        errorEl.textContent = error.message;
         auth.username = null;
         auth.token = null;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Entrar';
     }
 }
 
@@ -49,17 +84,17 @@ async function loadBalance() {
     }
     
     try {
+        // Remover account_id da URL, a API pega do JWT!
         const response = await fetch(
-            `/account/balance?account_id=${auth.username}`,
+            `/account/balance`,
             {
                 headers: {
-                    'Authorization': auth.token
+                    'Authorization': `Bearer ${auth.token}`
                 }
             }
         );
         
         if (response.status === 401 || response.status === 400) {
-            errorEl.textContent = 'Credenciais inválidas!';
             return false;
         }
         
@@ -92,11 +127,8 @@ function showDashboard() {
     // Mostrar dashboard
     document.getElementById('dashboardScreen').classList.add('active');
     
-    // Atualizar nome
-    document.getElementById('username').textContent = auth.username;
-    
-    // Carregar saldo
-    loadBalance();
+    // Atualizar nome (Corrigido para utilizar o ID correto welcomeUsername)
+    document.getElementById('welcomeUsername').textContent = auth.username;
 }
 
 function logout() {
