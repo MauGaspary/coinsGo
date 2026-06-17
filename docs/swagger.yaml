@@ -1,0 +1,121 @@
+basePath: /
+definitions:
+  api.AccountBalanceResponse:
+    properties:
+      balance:
+        type: number
+      code:
+        type: integer
+    type: object
+  api.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  api.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  api.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handlers.LoginRequest:
+    properties:
+      account_id:
+        type: string
+      password:
+        type: string
+    type: object
+  handlers.RegisterRequest:
+    properties:
+      account_id:
+        type: string
+      password:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API de serviços financeiros simulados
+  title: Projeto GoBank API
+  version: "1.0"
+paths:
+  /account/balance:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint para consultar o saldo da conta autenticada
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.AccountBalanceResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/api.Error'
+      summary: Obtém o saldo de uma conta
+      tags:
+      - accounts
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint para fazer login na conta autenticada
+      parameters:
+      - description: Dados do usuário
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.LoginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/api.Error'
+      summary: Faz login na conta
+      tags:
+      - accounts
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint para registrar um novo usuário no sistema
+      parameters:
+      - description: Dados do usuário
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/api.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.Error'
+      summary: Cria uma nova conta de usuário
+      tags:
+      - auth
+schemes:
+- http
+swagger: "2.0"

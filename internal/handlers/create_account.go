@@ -15,6 +15,16 @@ type RegisterRequest struct {
 	Password  string `json:"password"`
 }
 
+// CreateAccount godoc
+// @Summary      Cria uma nova conta de usuário
+// @Description  Endpoint para registrar um novo usuário no sistema
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Param        request body RegisterRequest true "Dados do usuário"
+// @Success      201 {object}
+// @Failure      400 {object}
+// @Router       /register [post]
 func (h *AccountHandlers) CreateAccount(w http.ResponseWriter, r *http.Request) {
 	var req RegisterRequest
 	err := json.NewDecoder(r.Body).Decode(&req)

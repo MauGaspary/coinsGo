@@ -15,6 +15,13 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+
+// @title Projeto GoBank API
+// @version 1.0
+// @description API de serviços financeiros simulados
+// @host localhost:8080
+// @BasePath /
+// @schemes http
 func main() {
 	godotenv.Load()
 	port := os.Getenv("PORT")

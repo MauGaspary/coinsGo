@@ -18,6 +18,16 @@ type LoginRequest struct {
 	Password  string `json:"password"`
 }
 
+// Login godoc
+// @Summary      Faz login na conta
+// @Description  Endpoint para fazer login na conta autenticada
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        request body LoginRequest true "Dados do usuário"
+// @Success      200 {object} api.LoginResponse
+// @Failure      401 {object} api.Error
+// @Router       /login [post]
 func (h *AccountHandlers) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
 	err := json.NewDecoder(r.Body).Decode(&req)

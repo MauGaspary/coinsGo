@@ -14,6 +14,15 @@ type AccountHandlers struct {
 	DB database.Querier
 }
 
+// GetAccountBalance godoc
+// @Summary      Obtém o saldo de uma conta
+// @Description  Endpoint para consultar o saldo da conta autenticada
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Success      200 {object} api.AccountBalanceResponse
+// @Failure      401 {object} api.Error
+// @Router       /account/balance [get]
 func (h *AccountHandlers) GetAccountBalance(w http.ResponseWriter, r *http.Request) {
 	accountID, ok := middleware.GetAccountIDFromContext(r.Context())
 	if !ok || accountID == "" {
